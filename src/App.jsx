@@ -47,18 +47,86 @@ function App() {
       <main className="relative z-20 container mx-auto px-4 py-8 sm:py-12 bg-transparent">
         <Hero />
 
+        {/* Botão Confirmar Presença em Destaque */}
+        <motion.section
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center items-center mb-6 sm:mb-8 md:mb-10 max-w-4xl mx-auto px-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <motion.a
+            href={MAP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 bg-slate-800/60 backdrop-blur-md border border-slate-700 text-white font-medium rounded-lg hover:bg-slate-700/60 hover:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-950 text-center text-sm sm:text-base"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Abrir no Maps
+          </motion.a>
+          
+          {/* Botão Confirmar Presença em Destaque */}
+          <motion.div
+            className="relative w-full sm:w-auto flex flex-col items-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            {/* Efeito de brilho pulsante ao redor */}
+            <motion.div
+              className="absolute inset-0 rounded-lg sm:rounded-xl"
+              animate={{
+                boxShadow: [
+                  '0 0 15px rgba(6, 182, 212, 0.4), 0 0 30px rgba(59, 130, 246, 0.2)',
+                  '0 0 25px rgba(6, 182, 212, 0.7), 0 0 50px rgba(59, 130, 246, 0.4)',
+                  '0 0 15px rgba(6, 182, 212, 0.4), 0 0 30px rgba(59, 130, 246, 0.2)',
+                ],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            
+            <motion.button
+              onClick={() => setIsModalOpen(true)}
+              className="relative w-full sm:w-auto px-6 sm:px-8 md:px-10 lg:px-12 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-lg sm:rounded-xl shadow-2xl hover:shadow-cyan-500/60 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-950 transform"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              animate={{
+                boxShadow: [
+                  '0 8px 25px rgba(6, 182, 212, 0.4), 0 0 15px rgba(59, 130, 246, 0.2)',
+                  '0 12px 35px rgba(6, 182, 212, 0.6), 0 0 25px rgba(59, 130, 246, 0.4)',
+                  '0 8px 25px rgba(6, 182, 212, 0.4), 0 0 15px rgba(59, 130, 246, 0.2)',
+                ],
+              }}
+              transition={{
+                boxShadow: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+              }}
+            >
+              ✨ Confirmar presença ✨
+            </motion.button>
+            
+          </motion.div>
+        </motion.section>
+
         {/* Prazo de Confirmação */}
         <motion.div
           className="max-w-5xl mx-auto mb-4 sm:mb-6 md:mb-8 px-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
           <motion.div
             className="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 backdrop-blur-md border-2 border-cyan-500/50 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 text-center relative overflow-hidden"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
           >
             {/* Efeito de brilho pulsante */}
             <motion.div
@@ -112,94 +180,26 @@ function App() {
           className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto mb-8 sm:mb-12 md:mb-16 px-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
         >
           <InfoCard
             icon="📅"
             label="Data"
             value="31/01/2026"
-            delay={0.6}
+            delay={0.8}
           />
           <InfoCard
             icon="🕐"
             label="Horário"
             value="18:00"
-            delay={0.7}
+            delay={0.9}
           />
           <InfoCard
             icon="📍"
             label="Local"
             value="Padre João Batista, 278"
-            delay={0.8}
+            delay={1.0}
           />
-        </motion.section>
-
-        {/* Action Buttons */}
-        <motion.section
-          className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center items-center mb-12 sm:mb-16 md:mb-20 max-w-4xl mx-auto px-2"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-        >
-          <motion.a
-            href={MAP_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 bg-slate-800/60 backdrop-blur-md border border-slate-700 text-white font-medium rounded-lg hover:bg-slate-700/60 hover:border-slate-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-950 text-center text-sm sm:text-base"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Abrir no Maps
-          </motion.a>
-          
-          {/* Botão Confirmar Presença em Destaque */}
-          <motion.div
-            className="relative w-full sm:w-auto flex flex-col items-center"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
-          >
-            {/* Efeito de brilho pulsante ao redor */}
-            <motion.div
-              className="absolute inset-0 rounded-lg sm:rounded-xl"
-              animate={{
-                boxShadow: [
-                  '0 0 15px rgba(6, 182, 212, 0.4), 0 0 30px rgba(59, 130, 246, 0.2)',
-                  '0 0 25px rgba(6, 182, 212, 0.7), 0 0 50px rgba(59, 130, 246, 0.4)',
-                  '0 0 15px rgba(6, 182, 212, 0.4), 0 0 30px rgba(59, 130, 246, 0.2)',
-                ],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            
-            <motion.button
-              onClick={() => setIsModalOpen(true)}
-              className="relative w-full sm:w-auto px-6 sm:px-8 md:px-10 lg:px-12 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white font-bold text-base sm:text-lg md:text-xl rounded-lg sm:rounded-xl shadow-2xl hover:shadow-cyan-500/60 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-950 transform"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              animate={{
-                boxShadow: [
-                  '0 8px 25px rgba(6, 182, 212, 0.4), 0 0 15px rgba(59, 130, 246, 0.2)',
-                  '0 12px 35px rgba(6, 182, 212, 0.6), 0 0 25px rgba(59, 130, 246, 0.4)',
-                  '0 8px 25px rgba(6, 182, 212, 0.4), 0 0 15px rgba(59, 130, 246, 0.2)',
-                ],
-              }}
-              transition={{
-                boxShadow: {
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                },
-              }}
-            >
-              ✨ Confirmar presença ✨
-            </motion.button>
-            
-          </motion.div>
         </motion.section>
 
         <MapSection />

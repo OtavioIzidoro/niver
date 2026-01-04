@@ -34,7 +34,7 @@ const Hero = () => {
       >
         {/* Imagem com efeitos */}
         <motion.div
-          className="w-full max-w-[280px] sm:max-w-md md:max-w-lg lg:max-w-xl px-2 relative"
+          className="w-full max-w-[760px] sm:max-w-md md:max-w-lg lg:max-w-xl px-2 relative"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ 
@@ -44,23 +44,6 @@ const Hero = () => {
             stiffness: 100
           }}
         >
-          {/* Brilho pulsante ao redor da imagem */}
-          <motion.div
-            className="absolute inset-0 rounded-2xl pointer-events-none z-0"
-            animate={{
-                boxShadow: [
-                '0 0 30px rgba(6, 182, 212, 0.3), 0 0 60px rgba(59, 130, 246, 0.2)',
-                '0 0 50px rgba(6, 182, 212, 0.5), 0 0 100px rgba(59, 130, 246, 0.3)',
-                '0 0 30px rgba(6, 182, 212, 0.3), 0 0 60px rgba(59, 130, 246, 0.2)',
-              ],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          
           <motion.img
             src={heroImage}
             alt="Tardezinha do Tavão"
@@ -78,6 +61,19 @@ const Hero = () => {
               ease: "easeInOut",
             }}
           />
+          
+          {/* Texto OpenCooler */}
+          <motion.p
+            className="text-center text-slate-300 text-base sm:text-lg md:text-xl mt-4 sm:mt-6 relative z-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8,
+              delay: 0.7,
+            }}
+          >
+           
+          </motion.p>
         </motion.div>
 
         {/* Efeito de partículas/brilhos ao redor */}
@@ -118,7 +114,7 @@ const Hero = () => {
 
         {/* Texto com efeito pulsante */}
         <motion.h1
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-center px-2 leading-tight relative z-10"
+          className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-center px-2 leading-tight relative z-10"
           initial={{ opacity: 0, y: 30, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ 
@@ -150,6 +146,19 @@ const Hero = () => {
             Tardezinha do Tavão
           </motion.span>
         </motion.h1>
+        
+        {/* Texto OpenCooler */}
+        <motion.p
+          className="text-center text-slate-300 text-base sm:text-lg md:text-xl mt-4 sm:mt-6 relative z-10 px-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 0.8,
+            delay: 0.9,
+          }}
+        >
+          <span className="font-semibold text-cyan-400">OpenCooler</span> - leve sua bebida de preferência
+        </motion.p>
       </motion.div>
     </motion.section>
   )

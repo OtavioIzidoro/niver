@@ -94,6 +94,22 @@ const BackgroundMusic = () => {
         if (globalIsPlaying || (!audio.paused && audio.currentTime > 0)) {
           return
         }
+        // Tentar play imediatamente quando os dados carregarem
+        await audio.play()
+        globalIsPlaying = true
+        setIsPlaying(true)
+        setHasError(false)
+      } catch (error) {
+        // Se falhar, continuar com outras estratégias
+      }
+    }
+    
+    // Handler para quando houver dados suficientes para tocar
+    const handleCanPlayThrough = async () => {
+      try {
+        if (globalIsPlaying || (!audio.paused && audio.currentTime > 0)) {
+          return
+        }
         await audio.play()
         globalIsPlaying = true
         setIsPlaying(true)
@@ -109,6 +125,7 @@ const BackgroundMusic = () => {
     audio.addEventListener('error', handleError)
     audio.addEventListener('canplay', handleCanPlay, { once: true })
     audio.addEventListener('loadeddata', handleLoadedData, { once: true })
+    audio.addEventListener('canplaythrough', handleCanPlayThrough, { once: true })
 
     // Tentar autoplay múltiplas vezes com diferentes estratégias
     const tryAutoplay = async () => {
@@ -265,6 +282,7 @@ const BackgroundMusic = () => {
       audio.removeEventListener('error', handleError)
       audio.removeEventListener('canplay', handleCanPlay)
       audio.removeEventListener('loadeddata', handleLoadedData)
+      audio.removeEventListener('canplaythrough', handleCanPlayThrough)
       removeAllInteractionListeners()
       document.removeEventListener('touchstart', handleFirstInteraction)
       document.removeEventListener('touchend', handleFirstInteraction)
