@@ -34,7 +34,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen relative bg-[#0a0a0a]">
+    <div className="min-h-screen relative bg-[#0a0a0a] overflow-x-hidden">
       <BackgroundMusic />
       {showConfetti && <Confetti />}
       

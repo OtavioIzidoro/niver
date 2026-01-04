@@ -5,6 +5,8 @@ import audioFile from '../assets/omiyamassages.fr - Raça Negra - Cheia De Mania
 // Variável global para garantir que só há uma instância tocando
 let globalAudioInstance = null
 let globalIsPlaying = false
+// Função global para iniciar música programaticamente
+let globalStartMusic = null
 
 const BackgroundMusic = () => {
   const audioRef = useRef(null)
@@ -22,6 +24,27 @@ const BackgroundMusic = () => {
 
     // Registrar esta instância como a instância global
     globalAudioInstance = audio
+    
+    // Função para iniciar música programaticamente (exportada globalmente)
+    globalStartMusic = async () => {
+      try {
+        if (globalIsPlaying || (!audio.paused && audio.currentTime > 0)) {
+          return
+        }
+        if (audio.muted) audio.muted = false
+        await audio.play()
+        globalIsPlaying = true
+        setIsPlaying(true)
+        setHasError(false)
+      } catch (error) {
+        // Falhou, mas não é crítico
+      }
+    }
+    
+    // Expor no window para acesso fácil de outros componentes
+    if (typeof window !== 'undefined') {
+      window.startBackgroundMusic = globalStartMusic
+    }
 
     // Configurar volume e atributos para autoplay
     audio.volume = 0.7
@@ -247,6 +270,10 @@ const BackgroundMusic = () => {
       document.removeEventListener('touchend', handleFirstInteraction)
       document.removeEventListener('click', handleFirstInteraction)
       document.removeEventListener('pointerdown', handleFirstInteraction)
+      globalStartMusic = null
+      if (typeof window !== 'undefined') {
+        window.startBackgroundMusic = null
+      }
     }
   }, [])
 

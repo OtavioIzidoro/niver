@@ -133,6 +133,14 @@ const SpaceIntro = ({ onComplete }) => {
           clearInterval(interval)
           return 26
         }
+        if (next === 20) {
+          // Iniciar música quando o contador chegar a 20
+          setTimeout(() => {
+            if (typeof window !== 'undefined' && window.startBackgroundMusic && typeof window.startBackgroundMusic === 'function') {
+              window.startBackgroundMusic()
+            }
+          }, 50)
+        }
         if (next === 26) {
           // Mostrar o 26 e depois chamar onComplete após um pequeno delay para mostrar o número
           setTimeout(() => {
@@ -151,7 +159,7 @@ const SpaceIntro = ({ onComplete }) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 bg-[#0a0a0a] flex items-center justify-center"
+        className="fixed inset-0 z-50 bg-[#0a0a0a] flex items-center justify-center overflow-hidden"
         initial={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
@@ -165,7 +173,7 @@ const SpaceIntro = ({ onComplete }) => {
 
         {/* Contador */}
         <motion.div
-          className="relative z-10 text-center"
+          className="relative z-10 text-center w-full px-4"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -176,7 +184,7 @@ const SpaceIntro = ({ onComplete }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="text-8xl sm:text-9xl md:text-[12rem] font-bold"
+            className="text-7xl sm:text-9xl md:text-[12rem] font-bold break-words"
             style={{
               background: 'linear-gradient(to right, #06b6d4, #3b82f6, #6366f1)',
               WebkitBackgroundClip: 'text',

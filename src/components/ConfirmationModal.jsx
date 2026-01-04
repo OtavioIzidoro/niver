@@ -127,34 +127,64 @@ const ConfirmationModal = ({ isOpen, onClose, onSuccess }) => {
 
         const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
         
+        // Detectar se é mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        
         // Tentar abrir imediatamente (sem setTimeout para evitar bloqueios)
         try {
-          // Método 1: Criar link e clicar
-          const link = document.createElement('a')
-          link.href = url
-          link.target = '_blank'
-          link.rel = 'noopener noreferrer'
-          link.style.display = 'none'
-          document.body.appendChild(link)
-          link.click()
-          
-          // Remover link após um delay
-          setTimeout(() => {
-            if (document.body.contains(link)) {
-              document.body.removeChild(link)
-            }
-          }, 100)
+          if (isMobile) {
+            // No mobile, usar window.location para abrir diretamente no app
+            // ou criar link sem target _blank para funcionar melhor
+            const link = document.createElement('a')
+            link.href = url
+            link.rel = 'noopener noreferrer'
+            link.style.display = 'none'
+            document.body.appendChild(link)
+            link.click()
+            
+            // Remover link após um delay
+            setTimeout(() => {
+              if (document.body.contains(link)) {
+                document.body.removeChild(link)
+              }
+            }, 100)
+          } else {
+            // No desktop, abrir em nova aba
+            const link = document.createElement('a')
+            link.href = url
+            link.target = '_blank'
+            link.rel = 'noopener noreferrer'
+            link.style.display = 'none'
+            document.body.appendChild(link)
+            link.click()
+            
+            // Remover link após um delay
+            setTimeout(() => {
+              if (document.body.contains(link)) {
+                document.body.removeChild(link)
+              }
+            }, 100)
+          }
         } catch (error) {
           // Fallback: tentar window.open
           try {
-            window.open(url, '_blank', 'noopener,noreferrer')
+            if (isMobile) {
+              // No mobile, usar window.location
+              window.location.href = url
+            } else {
+              window.open(url, '_blank', 'noopener,noreferrer')
+            }
           } catch (error2) {
             // Último recurso: copiar URL para área de transferência
-            navigator.clipboard.writeText(url).then(() => {
-              alert('URL do WhatsApp copiada! Cole no navegador.')
-            }).catch(() => {
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText(url).then(() => {
+                alert('URL do WhatsApp copiada! Cole no navegador.')
+              }).catch(() => {
+                alert(`Erro ao abrir WhatsApp. Acesse: ${url}`)
+              })
+            } else {
               alert(`Erro ao abrir WhatsApp. Acesse: ${url}`)
-            })
+            }
           }
         }
       }
